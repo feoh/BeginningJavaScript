@@ -1,6 +1,7 @@
 // Write a function called isDivisibleBy3 which returns `true` if a number is
 // divisible by 3, and `false` otherwise.
-var isDivisibleBy3 = function () {
+var isDivisibleBy3 = function (number) {
+    return (number % 3) === 0
 };
 
 
@@ -10,10 +11,12 @@ var isDivisibleBy3 = function () {
 // convert the other way, you subtract 32, and then multiply by
 // 5. Finally, you divide by 9. The division operator in JavaScript is
 // `/`.
-var celsToFahr = function () {
+var celsToFahr = function cels(cels) {
+    return ((cels * 9) / 5) + 32
 };
 
-var fahrToCels = function () {
+var fahrToCels = function (fahr) {
+    return ((fahr - 32) * 5) / 9
 };
 
 
@@ -31,13 +34,17 @@ var fahrToCels = function () {
 //
 //     randUpTo(1000);
 //     //=> 236
-var randUpTo = function () {
+var randUpTo = function (max) {
+    return (Math.round(Math.random() * max) -1)
 };
 
 
 // Write a function called `randBetween` that accepts two numbers representing a
 // range and returns a random whole number between those two numbers.
-var randBetween = function () {
+var randBetween = function (minimum,maximum) {
+    min = Math.ceil(minimum)
+    max = Math.floor(maximum)
+    return Math.floor(Math.random() * (max - min)) + min;
 };
 
 
@@ -56,7 +63,8 @@ var randBetween = function () {
 //
 //     isSuit("coins");
 //     //=> false
-var isSuit = function () {
+var isSuit = function (card) {
+    return (['hearts','diamonds','spades','clubs'].indexOf(card.toLowerCase()) >= 0)
 };
 
 
@@ -72,14 +80,16 @@ var isSuit = function () {
 //
 //     isRank("one");
 //     //=> false
-var isRank = function () {
+var isRank = function (card) {
+    return (['two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'jack', 'queen', 'king', 'ace'].indexOf(card.toLowerCase()) >= 0)
 };
 
 
 // Using the previous two functions, write a function called isCard that accepts
 // two arguments, a rank and a suit, and returns true if they are valid for a card,
 // and false otherwise.
-var isCard = function () {
+var isCard = function (rank, suit) {
+    return (isRank(rank) && isSuit(suit))
 };
 
 
@@ -88,7 +98,10 @@ var isCard = function () {
 // Remember that you can use strings in comparisons in the same way that you can
 // use numbers, and the ordering is alphabetical (with capital letters having lower
 // values than their lower-case counterparts).
-var isCapitalized = function () {
+var isCapitalized = function (word) {
+    var letter = word.charAt(0);
+
+    return (word.length > 0) && (letter < letter.toLowerCase())
 };
 
 
@@ -101,7 +114,12 @@ var isCapitalized = function () {
 //
 //     getHTMLText("<li>this is a list item</li>");
 //     //=> this is a list item
-var getHTMLText = function () {
+var getHTMLText = function (page) {
+    openTagStart = page.indexOf('<')
+    openTagEnd = page.indexOf('>', openTagStart)
+
+    bodyEnd = page.indexOf('<', openTagEnd + 1)
+    return page.slice(openTagEnd + 1, bodyEnd)
 };
 
 
@@ -122,5 +140,43 @@ var getHTMLText = function () {
 //
 // It may help in this case to look up the `lastIndexOf` method on the string
 // objects.
-var isHTMLElement = function () {
+var isHTMLElement = function(text) {
+    var startOpenTag = 0;
+    if (text.charAt(startOpenTag) != '<')
+    {
+        return false;
+    }
+
+    var endOpenTag = text.indexOf('>',1)
+
+    if (text.charAt(endOpenTag) != '>')
+    {
+        return false;
+    }
+
+    var openTagText = text.slice((startOpenTag + 1), endOpenTag)
+
+    var startCloseTag = text.indexOf('</', endOpenTag + 1)
+
+    if (text.slice(startCloseTag,startCloseTag+2) != '</')
+    {
+        return false;
+    }
+
+    var endCloseTag = text.indexOf('>', startCloseTag + 1)
+
+    if (text.charAt(endCloseTag) != '>')
+    {
+        return false;
+    }
+
+    var closeTagText = text.slice((startCloseTag + 2), endCloseTag)
+
+    if (openTagText != closeTagText)
+    {
+        return false;
+    }
+
+    // Ran the gauntlet!
+    return true;
 };

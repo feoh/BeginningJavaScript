@@ -82,7 +82,21 @@ var isLeapYear = function (year) {
 //
 //      firstInDictionary("whale", 5, 10);
 //      //=> ALL THREE ARGS MUST BE STRINGS!
-var firstInDictionary = function () {
+var firstInDictionary = function (first, second, third) {
+    if (typeof first !== "string" || typeof second !== "string" || typeof third !== "string") {
+        throw("All three must be strings!");
+    }
+    if (first < second && first < third) {
+        return first;
+    }
+
+    if (second < first && second < third) {
+        return second;
+    }
+
+    if (third < first && third < second) {
+        return third;
+    }
 };
 
 
