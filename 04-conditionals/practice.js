@@ -110,20 +110,56 @@ var firstInDictionary = function (first, second, third) {
 //
 //     getTagName("<p>this is wrong</div>");
 //     //=> Error: Not an HTML Element!
-var getTagName = function () {
+var getTagName = function (page) {
+    openTagStart = page.indexOf('<')
+    openTagEnd = page.indexOf('>', openTagStart)
+
+    openTag = page.slice(openTagStart + 1, openTagEnd)
+
+    bodyEnd = page.indexOf('<', openTagEnd + 1)
+    body = page.slice(openTagEnd + 1, bodyEnd)
+
+    closeTagStart = page.indexOf('<', bodyEnd)
+    closeTagEnd = page.indexOf('>', closeTagStart)
+    closeTag = page.slice(closeTagStart + 1, closeTagEnd)
+    closeTagMinusSlash = closeTag.slice(1, closeTagEnd)
+
+    if (openTag != closeTagMinusSlash)
+    {
+        throw("Error: Not an HTML Element!");
+    }
+
+    return openTag;
 };
 
 
 // Re-implement our improveTweet function so it can generate any of lol, omg,
 // lmao, and rofl.
-var improveTweet = function () {
+var improveTweet = function (tweet) {
+    choice = Math.round(Math.random() * 3)
+
+    switch (choice) {
+        case 0:
+            return tweet + " lol";
+            break;
+        case 1:
+            return tweet + " lmao";
+            break;
+        case 2:
+            return tweet + " omg";
+            break;
+        case 3:
+            return tweet + " rofl";
+            break;
+    }
 };
 
 
 // Write a function called `isQuestion` that returns true if the input is a
 // string and it ends in a question mark. We'll use this function in the next
 // practice problem.
-var isQuestion = function () {
+var isQuestion = function (str) {
+    return (str.charAt(str.length - 1) === '?');
 };
 
 
@@ -150,7 +186,54 @@ var isQuestion = function () {
 //
 //     magic8Ball("Is this a question?");
 //     //=> Signs point to yes
-var magic8Ball = function () {
+
+// Begin botch attempt!
+// var magic8Ball = function (question) {
+//     if (! isQuestion(question)) 
+//     {
+//         throw("THAT DOESN'T SOUND LIKE A QUESTION!")
+//     }
+
+//     guess = Math.round(Math.random() * 100);
+
+//     console.log("guess = " + guess);
+
+//     switch (guess) 
+//     {
+//         case (guess <= 50):
+//             console.log("Signs point to yes");
+//             return("Signs point to yes");
+//             break;
+//         case (guess <= 75):
+//             return("Very doubtful");
+//             break;
+//         case (guess > 75):
+//             return("My reply is no");
+//             break;
+//     }
+
+var magic8Ball = function (question) {
+    if (! isQuestion(question)) 
+    {
+        throw("THAT DOESN'T SOUND LIKE A QUESTION!")
+    }
+
+    guess = Math.round(Math.random() * 100);
+
+    console.log("guess = " + guess);
+
+    if (guess <= 50)
+    {
+        return("Signs point to yes");
+    }
+    else if (guess <= 75)
+    {
+        return("My reply is no");
+    }
+    else if (guess > 75)
+    {
+        return("Very doubtful");
+    }
 };
 
 
@@ -190,7 +273,33 @@ var magic8Ball = function () {
 //     var strWithInterjection = beginning + "-lol-" + end;
 //
 // You just have to generalize this to an arbitrary index and wrap it in a function.
-var interjectAt = function () {
+var interjectAt = function (interjection, position, str) {
+    var dashedInterjection = "-" + interjection + "-";
+    var beginning = str.slice(0,position);
+    var end = str.slice(position, end);
+
+    if (typeof(position) !== 'number')
+    {
+        throw("Position must be an integer!");
+    }
+
+    console.log("interjection: " + interjection)
+    if (typeof(interjection) !== 'string')
+    {
+        throw("interjection must be a string!")
+    }
+
+    if (typeof(str) !== 'string')
+    {
+        throw("str must be a string!")
+    }
+
+    if (position > str.length)
+    {
+        throw("You can't interject outside of the string!");
+    }
+
+    return beginning + dashedInterjection + end
 };
 
 
@@ -198,7 +307,14 @@ var interjectAt = function () {
 // `randomInterjection` function consists of generating a random message and a
 // random location within the string, and then calling into the `interjectAt`
 // function with the appropriate arguments.
-var randomInterject = function () {
+var randomInterject = function (tweet) {
+    var pos = Math.round(Math.random() * (tweet.length - 1));
+    console.log("pos: " + pos);
+    var choices = ['lol','omg'];
+
+    var whichInterjection = Math.round(Math.random() * (choices.length - 1));
+    console.log("whichInterjection: " + whichInterjection)
+    return interjectAt(choices[whichInterjection], pos, tweet);
 };
 
 
