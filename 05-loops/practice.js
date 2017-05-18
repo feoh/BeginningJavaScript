@@ -17,7 +17,25 @@
 //    isVowel("Y");
 //    //=> false
 //
-var isVowel = function () {
+var isVowel = function (str) {
+    var lstr = str.toLowerCase();
+    var vowels=['a','e','i','o','u'];
+    var vowel="";
+
+    for (var index=0; index < vowels.length; index++) {
+        vowel = vowels[index];
+        console.log("vowel: ", vowel);
+        
+        if (typeof(str) !== "string") {
+            return false;
+        }
+        
+        if (vowel === lstr) {
+            return true;
+        }
+    }
+
+    return false;
 };
 
 
