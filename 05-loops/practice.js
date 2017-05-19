@@ -18,17 +18,17 @@
 //    //=> false
 //
 var isVowel = function (str) {
+
+    if (typeof(str) !== "string") {
+        return false;
+    }
+
     var lstr = str.toLowerCase();
     var vowels=['a','e','i','o','u'];
     var vowel="";
 
     for (var index=0; index < vowels.length; index++) {
         vowel = vowels[index];
-        console.log("vowel: ", vowel);
-        
-        if (typeof(str) !== "string") {
-            return false;
-        }
         
         if (vowel === lstr) {
             return true;
@@ -57,7 +57,21 @@ var isVowel = function (str) {
 //    isLowerCaseLetter(true);
 //    //=> false
 //
-var isLowerCaseLetter = function () {
+var isLowerCaseLetter = function (str) {
+    if (typeof str !== "string") {
+        return false;
+    }
+
+    if (str.length > 1) {
+        return false;
+    }
+
+    var lstr = str.toLowerCase();
+    if (str === lstr) {
+        return true;
+    }
+
+    return false;
 };
 
 
@@ -77,7 +91,17 @@ var isLowerCaseLetter = function () {
 //     sumUpTo(-10);
 //     //=> input must be a zero or a positive number!
 //
-var sumUpTo = function () {
+var sumUpTo = function (upto) {
+    var sum=0;
+
+    if (upto < 0) {
+        throw "Input must be positive!";
+    }
+
+    for (var count=1; count<upto; count++) {
+        sum += count;
+    }
+    return sum;
 };
 
 
