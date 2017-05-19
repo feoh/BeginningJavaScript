@@ -98,7 +98,7 @@ var sumUpTo = function (upto) {
         throw "Input must be positive!";
     }
 
-    for (var count=1; count<upto; count++) {
+    for (var count=0; count< (upto + 1); count++) {
         sum += count;
     }
     return sum;
@@ -124,7 +124,18 @@ var sumUpTo = function (upto) {
 //     sumAToB("hello", "world");
 //     //=> inputs should be numbers!
 //
-var sumAToB = function () {
+var sumAToB = function (a, b) {
+    var sum=0;
+
+    if (!(typeof a === "number" && typeof b === "number"))   {
+        throw "A and B must be numbers!";
+    }
+
+    for (var count=a; count< (b + 1); count++) {
+        sum += count;
+    }
+    return sum;
+
 };
 
 
